@@ -4,6 +4,13 @@ Starter público para criar projetos em **Next.js** com uma base inicial já org
 
 A proposta é simples: reduzir o tempo perdido no setup inicial e entregar uma base que um desenvolvedor consiga clonar, entender e adaptar para um produto real.
 
+## Documentation
+
+- [Comece Aqui](/START.md)
+- [Start Here](/START_(en).md)
+- [ReadMe in English](/README_(en).md)
+
+
 ## O que este projeto entrega
 
 - Estrutura com `src/app` usando **App Router**.
@@ -583,8 +590,3 @@ Desenvolvido por um dev brasileiro para acelerar o início de projetos em Next.j
 
 GitHub: [Guto-Edu](https://github.com/Guto-Edu)
 
-## Documentation
-
-- [Comece Aqui](/START.md)
-- [Start Here](/START_(en).md)
-- [ReadMe in English](/README_(en).md)
