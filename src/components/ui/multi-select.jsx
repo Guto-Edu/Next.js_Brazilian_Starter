@@ -91,13 +91,26 @@ function MultiSelect({
   }
 
   function removeOption(event, optionValue) {
+    event.preventDefault()
     event.stopPropagation()
+
     onValueChange?.(value.filter((item) => item !== optionValue))
   }
 
   function clearAll(event) {
+    event.preventDefault()
     event.stopPropagation()
+
     onValueChange?.([])
+  }
+
+  function handleOptionKeyDown(event, option) {
+    if (option.disabled) return
+
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault()
+      toggleOption(option.value)
+    }
   }
 
   return (
@@ -182,12 +195,13 @@ function MultiSelect({
         <div
           data-slot="multi-select-content"
           className={cn(
-            "absolute top-[calc(100%+4px)] left-0 z-50 w-full overflow-hidden rounded-md bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 animate-in fade-in-0 zoom-in-95",
+            "absolute left-0 top-[calc(100%+4px)] z-50 w-full overflow-hidden rounded-md bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 animate-in fade-in-0 zoom-in-95",
             contentClassName
           )}
         >
           <div className="flex items-center border-b px-2">
             <SearchIcon className="mr-2 size-4 shrink-0 text-muted-foreground" />
+
             <Input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
@@ -197,7 +211,11 @@ function MultiSelect({
             />
           </div>
 
-          <div className="max-h-64 overflow-y-auto p-1">
+          <div
+            role="listbox"
+            aria-multiselectable="true"
+            className="max-h-64 overflow-y-auto p-1"
+          >
             {filteredOptions.length === 0 && (
               <div className="px-2 py-6 text-center text-sm text-muted-foreground">
                 {emptyMessage}
@@ -208,21 +226,32 @@ function MultiSelect({
               const selected = value.includes(option.value)
 
               return (
-                <button
+                <div
                   key={option.value}
-                  type="button"
-                  disabled={option.disabled}
+                  role="option"
+                  tabIndex={option.disabled ? -1 : 0}
+                  aria-selected={selected}
+                  aria-disabled={option.disabled}
                   data-slot="multi-select-item"
                   data-selected={selected}
+                  data-disabled={option.disabled}
                   className={cn(
-                    "relative flex w-full cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm outline-none select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50",
-                    selected && "bg-accent text-accent-foreground"
+                    "relative flex w-full cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm outline-none select-none",
+                    "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                    selected && "bg-accent text-accent-foreground",
+                    option.disabled && "pointer-events-none opacity-50"
                   )}
-                  onClick={() => toggleOption(option.value)}
+                  onClick={() => {
+                    if (!option.disabled) {
+                      toggleOption(option.value)
+                    }
+                  }}
+                  onKeyDown={(event) => handleOptionKeyDown(event, option)}
                 >
                   <Checkbox
                     checked={selected}
                     tabIndex={-1}
+                    aria-hidden="true"
                     className="pointer-events-none"
                   />
 
@@ -237,7 +266,7 @@ function MultiSelect({
                   </span>
 
                   {selected && <CheckIcon className="size-4 shrink-0" />}
-                </button>
+                </div>
               )
             })}
           </div>

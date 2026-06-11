@@ -1,0 +1,5 @@
+export function createDatabaseClient() {
+  throw new Error(
+    "Configure o adapter do seu banco em src/lib/database/local/client.js antes de usar.",
+  );
+}
