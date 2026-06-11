@@ -575,12 +575,16 @@ Antes de abrir um pull request:
 
 ## Licença
 
-Defina a licença do projeto antes de publicar para uso amplo.
-
-Sugestão: `MIT`, caso a intenção seja permitir uso livre com baixa restrição.
+MIT
 
 ## Autor
 
 Desenvolvido por um dev brasileiro para acelerar o início de projetos em Next.js sem transformar o primeiro dia de trabalho em configuração repetida.
 
 GitHub: [Guto-Edu](https://github.com/Guto-Edu)
+
+## Documentation
+
+- [Comece Aqui](/START.md)
+- [Start Here](/START_(en).md)
+- [ReadMe in English](/README_(en).md)
